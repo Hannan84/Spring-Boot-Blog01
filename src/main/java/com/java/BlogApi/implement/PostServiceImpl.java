@@ -1,24 +1,32 @@
 package com.java.BlogApi.implement;
 
 import com.java.BlogApi.entity.Post;
+import com.java.BlogApi.repo.PostRepo;
 import com.java.BlogApi.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PostServiceImpl implements PostService {
+
+    @Autowired
+    private PostRepo postRepo;
+
     @Override
     public Post createPost(Post post) {
-        return null;
+        return postRepo.save(post);
     }
 
     @Override
-    public Post getPostById(Long postId) {
-        return null;
+    public Post getPostById(Long id) {
+        return postRepo.findById(id).orElse(null);
     }
 
     @Override
     public List<Post> getAllPost() {
-        return List.of();
+        return postRepo.findAll();
     }
 
     @Override
@@ -27,7 +35,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePost(Long postId) {
-
+    public void deletePost(Long id) {
+        postRepo.deleteById(id);
     }
 }
